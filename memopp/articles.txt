@@ -1,7 +1,0 @@
-Hello World,paiza
-Hello Ruby,paiza
-Hello Sinatra,paiza
-世界の皆さんコンニチハ,霧島
-にゃー,ネコテスト
-テスト
-ですよん

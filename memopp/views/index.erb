@@ -1,6 +1,7 @@
-<h1>Memopp!</h1>
-
-<p>メモ</p>
-<% @articles.each do |v| %>
-<%= v %>
-<% end %>
+<% @articles.each do |article|  %>
+<%  article.each do |k, v|  %>
+<ul>
+  <li><%= v %></li>
+</ul>
+<%  end %> 
+<%  end %> 

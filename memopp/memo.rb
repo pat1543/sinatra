@@ -1,28 +1,35 @@
 require 'sinatra'
 require 'sinatra/reloader'
 require 'erb'
+require 'json'
 
 before do
   @user = "テストユーザー"
+  @articles = {}
+  File.open("articles.json") do |file|
+    @articles = JSON.load(file)
+  end
 end
 
 get '/' do
-  @article = params[:article]
   erb :index
 end
 
+get '/show/:id' do
+  @detail = @articles[params[:id]] - 1
+  erb :show
+end
+
 get '/new' do
-  File.open("articles.txt", "r") do |f|
-    @articles = f.read.split("\n")
-  end
-  erb :form
+  erb :new
 end
 
 post '/new' do
-  @article = params[:article]
-  File.open("articles.txt", "a") do |f|
-    f.puts(@article)
+  @new_id = @articles.length
+  @articles[:id] << @new_id
+  @articles["article"] = params[:article]
+  File.open("articles.json", "w") do |f|
+    JSON.dump(@articles, f)
   end
   erb :result
 end
-
