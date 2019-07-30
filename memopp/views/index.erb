@@ -1,7 +1,5 @@
-<% @articles.each do |article|  %>
-<%  article.each do |k, v|  %>
+<% @articles["memos"].each do |t| %>
 <ul>
-  <li><%= v %></li>
+<li><a href="/show/<%= t["id"] %>"><%= t["article"] %></a></li>
 </ul>
-<%  end %> 
-<%  end %> 
+<% end %>
