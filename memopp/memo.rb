@@ -2,9 +2,11 @@ require 'sinatra'
 require 'sinatra/reloader'
 require 'erb'
 require 'json'
+require 'securerandom'
 
 before do
-  @total = 1
+  @total = 0
+  @article = []
   @articles = {}
   File.open("articles.json") do |file|
     @articles = JSON.load(file)
@@ -12,11 +14,15 @@ before do
 end
 
 get '/' do
+  File.open("articles.json") do |file|
+    @articles = JSON.load(file)
+  end
   erb :index
 end
 
 get '/show/:id' do
-  @detail = @articles[params[:id]] - 1
+  @post = @articles["memos"].index(params[:id])
+
   erb :show
 end
 
@@ -24,11 +30,23 @@ get '/new' do
   erb :new
 end
 
-post '/new' do
-  @articles << {"id" => @total, "article" => params[:article]}
-  File.open("articles.json", "a") do |f|
-    JSON.dump(@articles, f)
+class Create
+  attr_reader :id, :article, :body
+
+  def initialize(article)
+    @id = SecureRandom.uuid
+    @article = article
+    @body = []
   end
-  @total += 1
-  erb :result
+
 end
+
+
+  post '/new' do
+    @memo = Create.new(params[:article])
+    @articles["memos"] << {id: @memo.id, article: @memo.article}
+    File.open("articles.json", "w") do |f|
+      JSON.dump({"memos" => @articles["memos"]}, f)
+    end
+    erb :result
+  end

@@ -1,5 +1,5 @@
-<% @articles.each do |article| %>
+<% @articles["memos"].each do |t| %>
 <ul>
-<li><%= "メモ#{article["id"]}" %> </li>
+<li><a href="/show/<%= t["id"] %>"><%= t["article"] %></a></li>
 </ul>
 <% end %>
