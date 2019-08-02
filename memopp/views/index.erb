@@ -1,5 +1,9 @@
-<% @articles["memos"].each do |t| %>
-<ul>
-<li><a href="/show/<%= t["id"] %>"><%= t["article"] %></a></li>
-</ul>
-<% end %>
+<div class="container">
+  <div class="row flex-column index-list">
+    <% @articles["memos"].each do |t| %>
+    <ul>
+      <li><a href="/show/<%= t["id"] %>"><%= t["title"] %></a></li>
+    </ul>
+    <% end %>
+  </div>
+</div>

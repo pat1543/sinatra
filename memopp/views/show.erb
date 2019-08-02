@@ -1,2 +1,17 @@
-<p><%= @post %></p>
+<div class="contents">
+  <h2 class="log"><%= @title %></h2>
+  <p class="show-contents"><%= @article %></p>
 
+  <div class="show-btns">
+    <form action="/edit/<%= @id %>" method="get" class="show-btn">
+      <button type="submit" class="btn btn-outline-primary">編集</button>
+    </form>
+    <form action="/edit/<%= @id %>" method="post" class="show-btn">
+      <input type="hidden" name="_method" value="delete">
+      <button type="submit" class="btn btn-outline-danger show-btn">削除</button>
+    </form>
+    <form action="/" method="get" class="show-btn">
+      <button type="submit" class="btn btn-outline-secondary show-btn">戻る</button>
+    </form>
+  </div>
+</div>

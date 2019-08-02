@@ -1,0 +1,50 @@
+* {
+  font-family: Verdana, sans-serif;
+}
+
+.log,
+.log:hover {
+  color: black;
+  text-decoration: none;
+  display: block;
+}
+
+.btn-info,
+.btn-result {
+  margin: 20px;
+}
+
+.btn-top-new {
+  margin-left: 30px;
+}
+
+.form-new {
+  margin-top: 20px;
+}
+
+.save-btn {
+  margin-left: 20px
+}
+
+.show-btns {
+  margin-top: 50px;
+}
+
+.show-btn {
+  display: inline;
+}
+
+.txt-area {
+  resize: none;
+  max-width: 500px;
+  max-height: 800px;
+}
+
+.index-list {
+  margin-top: 40px;
+  margin-left: 50px
+}
+
+.contents {
+  margin: 30px;
+}

@@ -1,0 +1,23 @@
+<div class="container form-new">
+  <div class="row">
+    <form action="/edit/<%= @id %>" method="post">
+      <input type="hidden" name="_method" value="patch">
+      <div class="form-group col-md-12">
+        <label for="title">タイトル</label>
+        <input name="title" type="text" class="form-control" id="title" value="<%= @title %>">
+      </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-md-12">
+      <label for="article">メモ</label>
+      <textarea name="article" class="form-control txt-area" id="article"><%= @article %></textarea>
+    </div>
+    <div class="save-btn">
+      <button class="btn btn-primary" type="submit">修正</button>
+      </form>
+      <form action="/" method="get" class="show-btn">
+        <button type="submit" class="btn btn-secondary">キャンセル</button>
+      </form>
+    </div>
+  </div>
+</div>

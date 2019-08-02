@@ -1,5 +1,8 @@
-<h1>書き込みました</h1>
-<p><%= @memo.article %></p>
-<form action="/" method="get">
-  <input type="submit" value="戻る">
-</form>
+<div class="contents">
+  <h1>書き込みました</h1>
+  <h2><%= "タイトル： #{params[:title]}" %></h2>
+  <h3><%= "内容： #{params[:article]}" %></h3>
+  <a href="/">
+    <button type="button" class="btn btn-outline-secondary">戻る</button>
+  </a>
+</div>

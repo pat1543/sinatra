@@ -1,9 +1,19 @@
-<h2><%= @user %>のフォーム</h2>
-<form action="/new" method="post">
-  <div>
-   <textarea name="article" rows="4" cols="40"></textarea>
+<div class="container form-new">
+  <div class="row">
+    <form action="/new" method="post">
+      <div class="form-group col-md-12">
+        <label for="title">タイトル</label>
+        <input name="title" type="text" class="form-control" id="title">
+      </div>
   </div>
-  <div>
-    <button class="btn btn-primary" type="submit">保存</button>
+  <div class="row">
+    <div class="form-group col-md-12">
+      <label for="article">メモ</label>
+      <textarea name="article" class="form-control txt-area" id="article"></textarea>
+    </div>
+    <div class="save-btn">
+      <button class="btn btn-primary" type="submit">保存</button>
+    </div>
+    </form>
   </div>
-</form>
+</div>
