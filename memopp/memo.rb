@@ -5,6 +5,7 @@ require 'sinatra/reloader'
 require 'erb'
 require 'json'
 require 'securerandom'
+require './memo_class'
 
 before do
   File.open('articles.json') do |file|
@@ -53,19 +54,9 @@ delete '/edit/:id' do
   erb :delete_result
 end
 
-class Create
-  attr_accessor :id, :title, :article
-
-  def initialize(title, article)
-    @id = SecureRandom.uuid
-    @title = title
-    @article = article
-  end
-end
-
 post '/new' do
-  @memo = Create.new(params[:title], params[:article])
-  @articles['memos'] << { id: @memo.id, title: @memo.title, article: @memo.article }
+  memo = Memo.new(params[:title], params[:article])
+  @articles['memos'] << { id: memo.id, title: memo.title, article: memo.article }
   File.open('articles.json', 'w') do |f|
     JSON.dump({ 'memos' => @articles['memos'] }, f)
   end
