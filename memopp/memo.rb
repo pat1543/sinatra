@@ -8,7 +8,7 @@ require "securerandom"
 require "./article"
 
 before do
-  @articles = Article.get_memos
+  @articles = Article.find_memos
 end
 
 get "/" do
