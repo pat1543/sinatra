@@ -1,73 +1,53 @@
 # frozen_string_literal: true
 
-require 'sinatra'
-require 'sinatra/reloader'
-require 'erb'
-require 'json'
-require 'securerandom'
+require "sinatra"
+require "sinatra/reloader"
+require "erb"
+require "json"
+require "securerandom"
+require "./article"
 
 before do
-  File.open('articles.json') do |file|
-    @articles = JSON.load(file)
-  end
+  @articles = Article.find_memos
 end
 
-get '/' do
+get "/" do
   erb :index
 end
 
-get '/show/:id' do
-  @id = @articles['memos'].find { |x| x['id'] == params[:id] }['id']
-  @title = @articles['memos'].find { |x| x['id'] == params[:id] }['title']
-  @article = @articles['memos'].find { |x| x['id'] == params[:id] }['article']
+get "/show/:id" do
+  @id = params[:id]
+  @title = Article.find_title(@articles, params[:id])
+  @article = Article.find_article(@articles, params[:id])
   erb :show
 end
 
-get '/new' do
+get "/new" do
   erb :new
 end
 
-get '/edit/:id' do
-  @id = @articles['memos'].find { |x| x['id'] == params[:id] }['id']
-  @title = @articles['memos'].find { |x| x['id'] == params[:id] }['title']
-  @article = @articles['memos'].find { |x| x['id'] == params[:id] }['article']
+get "/edit/:id" do
+  @id = params[:id]
+  @title = Article.find_title(@articles, params[:id])
+  @article = Article.find_article(@articles, params[:id])
   erb :edit
 end
 
-patch '/edit/:id' do
-  @articles['memos'].find { |x| x['id'] == params[:id] }['title'] = params[:title]
-  @articles['memos'].find { |x| x['id'] == params[:id] }['article'] = params[:article]
-  File.open('articles.json', 'w') do |f|
-    JSON.dump({ 'memos' => @articles['memos'] }, f)
-  end
+patch "/edit/:id" do
+  Article.update(@articles, params[:id], params[:title], params[:article])
+  Article.write(@articles)
   erb :result
 end
 
-delete '/edit/:id' do
-  hash = @articles['memos'].find { |x| x['id'] == params[:id] }
-  @index = @articles['memos'].index(hash)
-  @articles['memos'].delete_at(@index)
-  File.open('articles.json', 'w') do |f|
-    JSON.dump({ 'memos' => @articles['memos'] }, f)
-  end
+delete "/edit/:id" do
+  Article.delete(@articles, params[:id])
+  Article.write(@articles)
   erb :delete_result
 end
 
-class Create
-  attr_accessor :id, :title, :article
-
-  def initialize(title, article)
-    @id = SecureRandom.uuid
-    @title = title
-    @article = article
-  end
-end
-
-post '/new' do
-  @memo = Create.new(params[:title], params[:article])
-  @articles['memos'] << { id: @memo.id, title: @memo.title, article: @memo.article }
-  File.open('articles.json', 'w') do |f|
-    JSON.dump({ 'memos' => @articles['memos'] }, f)
-  end
+post "/new" do
+  article = Article.new(params[:title], params[:article])
+  @articles["memos"] << { id: article.id, title: article.title, article: article.article }
+  Article.write(@articles)
   erb :result
 end
